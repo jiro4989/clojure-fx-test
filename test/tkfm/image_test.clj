@@ -7,7 +7,7 @@
 
 (deftest trim-test
   (testing "画像のトリミングのテスト"
-    (-> (ImageIO/read "./data/in/test01.png")
+    (-> (ImageIO/read (io/file  "./data/in/test01.png"))
         (trim {:x 0 :y 0 :width 144 :height 144})
         (ImageIO/write "PNG" (io/file "./data/out/trim-test-result.png")))))
 

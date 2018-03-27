@@ -13,8 +13,7 @@
 ;; trim - 画像を指定の座標から指定の幅だけ切り出した新しい画像として返却する
 (defn trim [^BufferedImage image
             v]
-  (.. image
-      (getSubImage v[:x] v[:y] v[:width] v[:height])))
+  (.getSubImage image (v :x) (v :y) (v :width) (v :height)))
 
 ;; scale - 画像を指定の拡大率で拡縮した新しい画像を返却する
 (defn scale [^BufferedImage image
@@ -30,8 +29,8 @@
 ;; flip - 画像を左右反転した新しい画像を返却する
 (defn flip [^BufferedImage image]
   (let [ni (new-image image)]
-    (.. (doto (AffineTransform/getScaleInstance -1 1)
-        (.translate (.getWidth image) 0)
-        (AffineTransformOp. AffineTransformOp/TYPE_BICUBIC))
-      (filter image ni))
+    (-> (doto (AffineTransform/getScaleInstance -1 1)
+          (.translate (.getWidth image) 0))
+        (AffineTransformOp. AffineTransformOp/TYPE_BICUBIC)
+        (.filter image ni))
     ni))
